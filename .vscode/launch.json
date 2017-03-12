@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Запустить программу",
-            "program": "${workspaceRoot}\\index.js"
+            "program": "${workspaceRoot}\\train.js"
         },
         {
             "type": "node",

@@ -1,4 +1,4 @@
-var InputNeuron  = require('./neuron').InputNeuron,
+let InputNeuron  = require('./neuron').InputNeuron,
     HiddenNeuron = require('./neuron').HiddenNeuron,
     OutputNeuron = require('./neuron').OutputNeuron,
     BiasNeuron   = require('./neuron').BiasNeuron,
@@ -25,7 +25,7 @@ module.exports =
             this.outputNeuron = new OutputNeuron();
             this.biasNeuron = new BiasNeuron();
 
-            this.hiddenNeurons.forEach(function(neuron) {
+            this.hiddenNeurons.forEach((neuron) => {
                 this.connections.push(new Connection(this.inputNeurons[0], neuron))
                 this.connections.push(new Connection(this.inputNeurons[1], neuron))
                 this.connections.push(new Connection(neuron, this.outputNeuron))
@@ -48,7 +48,7 @@ module.exports =
         }
 
         setWeights(weights) {
-            var len = weights.length 
+            let len = weights.length 
             
             if (len !== this.connections.length) {
                 throw Error("not all weights set. Amount of weights must be equal to connections")

@@ -46,10 +46,10 @@ class Neuron extends NeuronBase {
 
     // Propagation function
     propagate () {
-        var sum = 0;
+        let sum = 0;
 
-        for (var i=0; i<this.inputs.length; i++) { 
-            var conn = this.inputs[i];
+        for (let i=0; i<this.inputs.length; i++) { 
+            let conn = this.inputs[i];
             sum += conn.weight*conn.input.activation; 
         }
         this.propagation = sum;
@@ -64,10 +64,6 @@ class OutputNeuron extends Neuron {
         this.isOutput = true;
         this.inputs = [];
     }
-
-    calculateError (desired) {
-        return this.deriveActivation()*(desired-this.activation)
-    }
 }
 
 class HiddenNeuron extends Neuron {
@@ -76,16 +72,6 @@ class HiddenNeuron extends Neuron {
         this.isHidden = true;
         this.inputs = [];
         this.outputs = [];
-    }
-
-    calculateError (desired) {
-        var sum = 0;
-
-        this.outputs.forEach(function(conn) {
-            sum += conn.output.calculateError(desired)*conn.weight;
-        }, this);
-
-        return this.deriveActivation()*sum;
     }
 }
 
