@@ -2,26 +2,26 @@
 // Base neuron class for all neurons including Bias and input neurons
 class NeuronBase {
     constructor() {
-        this.activation = 0;
-        this.propagation = 0;
+        this.activation = 0
+        this.propagation = 0
     }
 }
 
 // Simple neurons: Input. Bias
 class InputNeuron extends NeuronBase {
     constructor(props) {
-        super(props);
-        this.isInput = true;
-        this.outputs = [];
+        super(props)
+        this.isInput = true
+        this.outputs = []
     }
 }
 
 class BiasNeuron extends NeuronBase {
     constructor(props) {
-        super(props);
-        this.isBias = true;
-        this.activation = 1;
-        this.outputs = [];
+        super(props)
+        this.isBias = true
+        this.activation = 1
+        this.outputs = []
     }
 }
 
@@ -29,13 +29,13 @@ class BiasNeuron extends NeuronBase {
 // Base class for hard neurons: Hidden, Output
 class Neuron extends NeuronBase {
     constructor(props) {
-        super(props);
+        super(props)
     }
 
     // Activation function - Logistic function
     activate () {
-        this.propagate();
-        this.activation = 1/(1+Math.exp(-this.propagation));
+        this.propagate()
+        this.activation = 1/(1+Math.exp(-this.propagation))
         return this.activation
     }  
 
@@ -46,32 +46,34 @@ class Neuron extends NeuronBase {
 
     // Propagation function
     propagate () {
-        let sum = 0;
+        let sum = 0,
+            len = this.inputs.length
 
-        for (let i=0; i<this.inputs.length; i++) { 
-            let conn = this.inputs[i];
-            sum += conn.weight*conn.input.activation; 
+        for (let i=0; i<len; i++) { 
+            let conn = this.inputs[i]
+            sum += conn.weight*conn.input.activation 
         }
-        this.propagation = sum;
-        return this.propagation;
+
+        this.propagation = sum
+        return this.propagation
     }
 }
 
-class OutputNeuron extends Neuron {
-    
+class OutputNeuron extends Neuron 
+{
     constructor(props) {
-        super(props);
-        this.isOutput = true;
-        this.inputs = [];
+        super(props)
+        this.isOutput = true
+        this.inputs = []
     }
 }
 
 class HiddenNeuron extends Neuron {
     constructor(props) {
-        super(props);
-        this.isHidden = true;
-        this.inputs = [];
-        this.outputs = [];
+        super(props)
+        this.isHidden = true
+        this.inputs = []
+        this.outputs = []
     }
 }
 

@@ -2,7 +2,7 @@ let InputNeuron  = require('./neuron').InputNeuron,
     HiddenNeuron = require('./neuron').HiddenNeuron,
     OutputNeuron = require('./neuron').OutputNeuron,
     BiasNeuron   = require('./neuron').BiasNeuron,
-    Connection   = require('./connection').Connection;
+    Connection   = require('./connection').Connection
 
 module.exports = 
 {
@@ -16,35 +16,35 @@ module.exports =
         }
 
         createNeurons() {
-            this.inputNeurons.push(new InputNeuron());
-            this.inputNeurons.push(new InputNeuron());
+            this.inputNeurons.push(new InputNeuron())
+            this.inputNeurons.push(new InputNeuron())
 
-            this.hiddenNeurons.push(new HiddenNeuron());
-            this.hiddenNeurons.push(new HiddenNeuron());
+            this.hiddenNeurons.push(new HiddenNeuron())
+            this.hiddenNeurons.push(new HiddenNeuron())
 
-            this.outputNeuron = new OutputNeuron();
-            this.biasNeuron = new BiasNeuron();
+            this.outputNeuron = new OutputNeuron()
+            this.biasNeuron = new BiasNeuron()
 
             this.hiddenNeurons.forEach((neuron) => {
                 this.connections.push(new Connection(this.inputNeurons[0], neuron))
                 this.connections.push(new Connection(this.inputNeurons[1], neuron))
                 this.connections.push(new Connection(neuron, this.outputNeuron))
                 this.connections.push(new Connection(this.biasNeuron, neuron))
-            }, this);
+            }, this)
 
-            this.connections.push(new Connection(this.biasNeuron, this.outputNeuron));
+            this.connections.push(new Connection(this.biasNeuron, this.outputNeuron))
         }
 
         // input type of [0,0]
         calculate(input) {
-            this.inputNeurons[0].activation = input[0];
-            this.inputNeurons[1].activation = input[1];
+            this.inputNeurons[0].activation = input[0]
+            this.inputNeurons[1].activation = input[1]
 
             this.hiddenNeurons.forEach(function(element) {
-                element.activate();
-            }, this);
+                element.activate()
+            }, this)
 
-            return this.outputNeuron.activate();
+            return this.outputNeuron.activate()
         }
 
         setWeights(weights) {
