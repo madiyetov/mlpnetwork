@@ -9,9 +9,8 @@ let network = new Network()
 network.createNeurons()
 network.setWeights(weights)
 
-for (i=0; i<patterns.length; i++) {
-    let pattern = patterns[i]
-    console.log(""+pattern.input+"     "+pattern.desired+"    "+network.calculate(pattern.input))
+for (let pattern of patterns) {
+    console.log(`${pattern.input}      ${pattern.desired}       ${network.calculate(pattern.input)}`)
 }
 
 

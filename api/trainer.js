@@ -12,28 +12,38 @@ module.exports = {
         {
             this.bindErrorFunctions(network)
 
-            for (var {input: [i1, i2], desired} of this.patterns) {
-                
-                // Execute network for input pattern
-                network.calculate([i1, i2])
-                
-                // Calculate error function for every neuron
-                network.outputNeuron.error = network.outputNeuron.calculateError(desired)
-                
-                network.hiddenNeurons.forEach(function(neuron) {
-                    neuron.error = neuron.calculateError(desired)
-                }, network)
-                
-                // Calculate delta for every connection
-                network.connections.forEach(function(conn) {
-                    var outputNeuron = conn.output
-                    conn.delta = this.learnRate*outputNeuron.error*conn.input.activation
-                }, this)
+            // train untill error less than 0.8
+            for (let i = 0, errorSum = 1; errorSum > 0.1; i++)
+            {
+                errorSum = 0
 
-                // Update weights of every connection with deltas
-                network.connections.forEach(function(conn) {
-                    conn.weight += conn.delta
-                }, network)
+                for (var { input, desired } of this.patterns) {
+                    
+                    // Execute network for input pattern
+                    let result = network.calculate(input)
+
+                    // Calculate error function for every neuron
+                    network.outputNeuron.error = network.outputNeuron.calculateError(desired)
+
+                    network.hiddenNeurons.forEach(function(neuron) {
+                        neuron.error = neuron.calculateError(desired)
+                    }, network)
+                    
+                    // Calculate delta for every connection
+                    network.connections.forEach(function(conn) {
+                        var outputNeuron = conn.output
+                        conn.delta = this.learnRate*outputNeuron.error*conn.input.activation
+                    }, this)
+
+                    // Update weights of every connection with deltas
+                    network.connections.forEach(function(conn) {
+                        conn.weight += conn.delta
+                    }, network)
+
+                    errorSum += Math.abs(desired-network.outputNeuron.activation) 
+                }
+
+                console.log(`${i++}.    ${errorSum}`)
             }
         }
 

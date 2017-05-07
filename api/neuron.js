@@ -46,15 +46,12 @@ class Neuron extends NeuronBase {
 
     // Propagation function
     propagate () {
-        let sum = 0,
-            len = this.inputs.length
+        this.propagation = 0
 
-        for (let i=0; i<len; i++) { 
-            let conn = this.inputs[i]
-            sum += conn.weight*conn.input.activation 
+        for (let conn of this.inputs) { 
+            this.propagation += conn.weight*conn.input.activation 
         }
 
-        this.propagation = sum
         return this.propagation
     }
 }

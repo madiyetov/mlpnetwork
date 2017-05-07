@@ -11,14 +11,14 @@ let learnRate = 0.9,
 network.createNeurons()
 
 // Training process of the network
-for (let i=0; i<2000; i++) 
-{
+/*for (let i=0; i<2000; i++) 
+{*/
     trainer.train(network)
     
-    if (i === 1700) {
+    /*if (i === 1700) {
         learnRate = 0.7
     }
-}
+}*/
 
 // Saving the optimal weights to file
 network.connections.forEach((conn) => {

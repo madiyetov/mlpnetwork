@@ -16,22 +16,22 @@ module.exports =
         }
 
         createNeurons() {
-            this.inputNeurons.push(new InputNeuron())
-            this.inputNeurons.push(new InputNeuron())
 
-            this.hiddenNeurons.push(new HiddenNeuron())
-            this.hiddenNeurons.push(new HiddenNeuron())
-
+            // creating all neurons
+            this.inputNeurons.push(new InputNeuron(), new InputNeuron())
+            this.hiddenNeurons.push(new HiddenNeuron(), new HiddenNeuron())
             this.outputNeuron = new OutputNeuron()
             this.biasNeuron = new BiasNeuron()
 
+            // connecting hidden neurons
             this.hiddenNeurons.forEach((neuron) => {
-                this.connections.push(new Connection(this.inputNeurons[0], neuron))
-                this.connections.push(new Connection(this.inputNeurons[1], neuron))
-                this.connections.push(new Connection(neuron, this.outputNeuron))
-                this.connections.push(new Connection(this.biasNeuron, neuron))
+                this.connections.push(new Connection(this.inputNeurons[0], neuron),
+                                      new Connection(this.inputNeurons[1], neuron),
+                                      new Connection(neuron, this.outputNeuron),
+                                      new Connection(this.biasNeuron, neuron))
             }, this)
 
+            // connecting bias neuron with the output neuron
             this.connections.push(new Connection(this.biasNeuron, this.outputNeuron))
         }
 
