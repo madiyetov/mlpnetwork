@@ -1,3 +1,6 @@
+let HiddenNeuron = require('./neuron').HiddenNeuron,
+    OutputNeuron = require('./neuron').OutputNeuron
+
 module.exports = {
     
     Trainer: class Trainer 
@@ -49,10 +52,10 @@ module.exports = {
 
         bindErrorFunctions (network) 
         {
-            if (network.outputNeuron.calculateError) return
+            if (OutputNeuron.calculateError) return
 
-            network.outputNeuron.calculateError = this.outputNeuronErrorCalculator        
-            network.hiddenNeurons[0].__proto__.calculateError = this.hiddenNeuronErrorCalculator
+            OutputNeuron.prototype.calculateError = this.outputNeuronErrorCalculator        
+            HiddenNeuron.prototype.calculateError = this.hiddenNeuronErrorCalculator
         }
 
         hiddenNeuronErrorCalculator (desired) 
