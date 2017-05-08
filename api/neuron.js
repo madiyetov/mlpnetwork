@@ -1,13 +1,20 @@
 
-// Base neuron class for all neurons including Bias and input neurons
+/**
+ * Base neuron class for all neurons including Bias and input neurons
+ * 
+ * @class NeuronBase
+ */
 class NeuronBase {
     constructor() {
         this.activation = 0
         this.propagation = 0
     }
 }
-
-// Simple neurons: Input. Bias
+/**
+ * Simple neurons: Input. Bias
+ * 
+ * @class InputNeuron
+ */
 class InputNeuron extends NeuronBase {
     constructor(props) {
         super(props)
@@ -25,26 +32,47 @@ class BiasNeuron extends NeuronBase {
     }
 }
 
-
-// Base class for hard neurons: Hidden, Output
+/**
+ * Base class for hard neurons: Hidden, Output
+ * 
+ * @class Neuron
+ */
 class Neuron extends NeuronBase {
     constructor(props) {
         super(props)
     }
 
-    // Activation function - Logistic function
+    /**
+     * Activation function - Logistic function
+     * 
+     * @returns {number}
+     * 
+     * @memberof Neuron
+     */
     activate () {
         this.propagate()
         this.activation = 1/(1+Math.exp(-this.propagation))
         return this.activation
     }  
 
-    // Derivation of logistic function
+    /**
+     * Derivation of logistic function
+     * 
+     * @returns {number}
+     * 
+     * @memberof Neuron
+     */
     deriveActivation () {
         return this.activation * (1-this.activation)
     }
 
-    // Propagation function
+    /**
+     * Propagation function
+     * 
+     * @returns {number}
+     * 
+     * @memberof Neuron
+     */
     propagate () {
         this.propagation = 0
 
@@ -75,8 +103,8 @@ class HiddenNeuron extends Neuron {
 }
 
 module.exports = {
-    OutputNeuron: OutputNeuron,
-    HiddenNeuron: HiddenNeuron,
-    InputNeuron: InputNeuron,
-    BiasNeuron: BiasNeuron
+    OutputNeuron : OutputNeuron,
+    HiddenNeuron : HiddenNeuron,
+    InputNeuron  : InputNeuron,
+    BiasNeuron   : BiasNeuron
 }

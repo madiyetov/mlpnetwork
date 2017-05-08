@@ -5,7 +5,10 @@ module.exports = {
     
     Trainer: class Trainer 
     {
-        // pattern type of {input: [0, 0], desired: 0}
+        /**
+         * @param  {number} learnRate
+         * @param  {[{input: [0, 0], desired: 0}]} patterns
+         */
         constructor (learnRate, patterns) {
             this.learnRate = learnRate
             this.patterns = patterns
@@ -24,7 +27,7 @@ module.exports = {
                     
                     // Execute network for input pattern
                     let result = network.calculate(input)
-
+                    
                     // Calculate error function for every neuron
                     network.outputNeuron.error = network.outputNeuron.calculateError(desired)
 

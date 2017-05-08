@@ -35,7 +35,12 @@ module.exports =
             this.connections.push(new Connection(this.biasNeuron, this.outputNeuron))
         }
 
-        // input type of [0,0]
+        /**
+         * Calculates the output for given input
+         * 
+         * @param {[number, number]} input 
+         * @returns {number} 
+         */
         calculate(input) {
             this.inputNeurons[0].activation = input[0]
             this.inputNeurons[1].activation = input[1]
@@ -43,10 +48,14 @@ module.exports =
             this.hiddenNeurons.forEach(function(element) {
                 element.activate()
             }, this)
-
+            
             return this.outputNeuron.activate()
         }
-
+        /**
+         * Sets the predefined weights
+         * 
+         * @param {[number, number]} weights 
+         */
         setWeights(weights) {
             let len = weights.length 
             
