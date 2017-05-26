@@ -10,51 +10,81 @@ module.exports =
         constructor() {
             this.inputNeurons = []
             this.hiddenNeurons = []
-            this.outputNeuron = null
+            this.outputNeurons = []
             this.biasNeuron = null
             this.connections = []
         }
 
-        createNeurons() {
+        /**
+         * Builds network
+         * 
+         * @param {number} inputs 
+         * @param {number} hiddens 
+         * @param {number} outputs 
+         */
+        buildNetwork(inputs, hiddens, outputs) {
+            this.createNeurons(inputs, hiddens, outputs)
+            this.connectNeurons()         
+        }
 
-            // creating all neurons
-            this.inputNeurons.push(new InputNeuron(), new InputNeuron())
-            this.hiddenNeurons.push(new HiddenNeuron(), new HiddenNeuron())
-            this.outputNeuron = new OutputNeuron()
-            this.biasNeuron = new BiasNeuron()
+        createNeurons(inputs, hiddens, outputs) {
+
+            this.inputNeurons  = Array.from(new Array(inputs), () => new InputNeuron())
+            this.hiddenNeurons = Array.from(new Array(hiddens), () => new HiddenNeuron())
+            this.outputNeurons = Array.from(new Array(outputs), () => new OutputNeuron())
+            this.biasNeuron = new BiasNeuron() 
+        }
+
+        connectNeurons() {
 
             // connecting hidden neurons
-            this.hiddenNeurons.forEach((neuron) => {
-                this.connections.push(new Connection(this.inputNeurons[0], neuron),
-                                      new Connection(this.inputNeurons[1], neuron),
-                                      new Connection(neuron, this.outputNeuron),
-                                      new Connection(this.biasNeuron, neuron))
+            this.hiddenNeurons.forEach((hidden) => {
+
+                this.inputNeurons.forEach((input) => {                             // with the input neurons
+                    this.connections.push(new Connection(input, hidden))
+                })
+
+                this.outputNeurons.forEach((output) => {                           // with the output neurons
+                    this.connections.push(new Connection(hidden, output))
+                })
+
+                this.connections.push(new Connection(this.biasNeuron, hidden))     // with the bias neurons
+            
             }, this)
 
-            // connecting bias neuron with the output neuron
-            this.connections.push(new Connection(this.biasNeuron, this.outputNeuron))
+            // connecting bias neuron with the output neurons
+            this.outputNeurons.forEach((output) => {
+                this.connections.push(new Connection(this.biasNeuron, output))
+            }, this)
         }
 
         /**
          * Calculates the output for given input
          * 
-         * @param {[number, number]} input 
-         * @returns {number} 
+         * @param {[number]} inputs
+         * @returns {[number]} 
          */
-        calculate(input) {
-            this.inputNeurons[0].activation = input[0]
-            this.inputNeurons[1].activation = input[1]
+        calculate(inputs) {
+            let length = this.inputNeurons.length
 
-            this.hiddenNeurons.forEach(function(element) {
-                element.activate()
+            if (inputs.length !== length) 
+                throw new Error(`Pattern must have ${length} inputs for ${length} input neurons`)
+
+            for (let i=0; i<length; i++) {
+                this.inputNeurons[i].activation = inputs[i]
+            }
+
+            this.hiddenNeurons.forEach(function(hidden) {
+                hidden.activate()
             }, this)
             
-            return this.outputNeuron.activate()
+            return this.outputNeurons.map((output) => output.activate())
         }
+
         /**
          * Sets the predefined weights
          * 
-         * @param {[number, number]} weights 
+         * @param {[number]} weights 
          */
         setWeights(weights) {
             let len = weights.length 

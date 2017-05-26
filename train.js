@@ -8,12 +8,12 @@ let learnRate = 0.9,
     patterns = jsonfile.readFileSync('./data/patterns.json'),
     trainer = new Trainer(learnRate, patterns)
 
-network.createNeurons()
+network.buildNetwork(2, 3, 1)
 
 // Training process of the network
 trainer.train(network)
 
-// Saving the optimal weights to file
+// Saving the optimal weights to the file
 network.connections.forEach((conn) => {
     weights.push(conn.weight)
 })

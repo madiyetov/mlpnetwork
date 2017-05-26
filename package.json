@@ -1,10 +1,11 @@
 {
   "name": "mlpnetwork",
   "version": "1.0.0",
-  "description": "Simple MLP neural network for XOR. Object oriented Javascript.",
+  "description": "Simple MLP neural network with one hidden layer. Object oriented ES6.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "train": "node train.js",
+    "process": "node index.js"
   },
   "repository": {
     "type": "git",
