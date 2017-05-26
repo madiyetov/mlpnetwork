@@ -30,7 +30,7 @@ network.buildNetwork(2, 3, 1)
 ```
 let weights = trainer.train(network)
 ```
-```train``` method returns ```weights```. You can save it to the file as json. You can use it simply passing to ```setWeights``` method of ```Network``` class.
+```train``` method returns ```weights```. You can save it to the file as json. You can use it next time simply passing to ```setWeights``` method of ```Network``` class.
 
 #### 4. Use it
 ```
