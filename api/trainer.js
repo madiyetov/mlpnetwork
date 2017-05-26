@@ -14,6 +14,10 @@ module.exports = {
             this.patterns = patterns
         }
 
+        /**
+         * @param  {Network} network
+         * @returns {[number]}
+         */
         train (network) 
         {
             this.bindErrorFunctions(network)
@@ -58,6 +62,8 @@ module.exports = {
 
                 console.log(`${i++}.    ${errorSum}`)
             }
+
+            return network.connections.map((conn) => conn.weight)
         }
 
         bindErrorFunctions (network) 
