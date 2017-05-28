@@ -1,8 +1,8 @@
-# Simple MLP. Written in ES6.
+# Simple MLP neural network. Written in ES6.
 
 ## Usage
 
-#### 1. Create the new Network and Trainer objects.
+#### 1. Create new Network and Trainer objects.
 
 ```
 let network = new Network(),
@@ -21,8 +21,7 @@ network.buildNetwork(2, 3, 1)
 ```
 let weights = trainer.train(network, patterns[, learnRate])
 ```
-```train``` method returns ```weights```. Save it to the file as json then you can use it next time simply passing to ```setWeights``` method of ```Network``` class.
-<br>```patterns``` is an array of patterns, contains input and desired values: 
+```train``` method returns ```weights```. Save it to the file as json then next time you can use it simply passing to ```setWeights``` method of ```Network``` class. ```patterns``` is an array of patterns, contains input and desired values for each inputs and outputs: 
 ```
 [
   {
@@ -32,9 +31,9 @@ let weights = trainer.train(network, patterns[, learnRate])
 ]
 ```
 
-#### 4. Use it
+#### 4. Use
 
 ```
 network.calculate(input)
 ```
-```input``` object must be same as pattern
+```input``` object must be the same as input property of the pattern used in training
