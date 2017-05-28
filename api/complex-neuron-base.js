@@ -19,7 +19,7 @@ module.exports = class ComplexNeuronBase extends NeuronBase {
      * 
      * @returns {number}
      * 
-     * @memberof Neuron
+     * @memberof ComplexNeuronBase
      */
     activate () {
         let me = this
@@ -35,7 +35,7 @@ module.exports = class ComplexNeuronBase extends NeuronBase {
      * 
      * @returns {number}
      * 
-     * @memberof Neuron
+     * @memberof ComplexNeuronBase
      */
     deriveActivation () {
         return this.activation * (1-this.activation)
@@ -46,7 +46,7 @@ module.exports = class ComplexNeuronBase extends NeuronBase {
      * 
      * @returns {number}
      * 
-     * @memberof Neuron
+     * @memberof ComplexNeuronBase
      */
     propagate () {
         let me = this
