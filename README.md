@@ -2,15 +2,27 @@
 
 ## Usage
 
-#### 1. Create new Network and Trainer objects.
+#### 1. Create the new Network and Trainer objects.
 
 ```
 let network = new Network(),
-    trainer = new Trainer(learnRate, patterns)
+    trainer = new Trainer()
 ```
 
-```learnRate``` is an integer.
-```patterns``` is an array of patterns every of which contains input and desired values 
+#### 2. Build network.
+
+```
+network.buildNetwork(2, 3, 1)
+```
+```buildNetwork``` accepts amounts of input, hidden and output neurons.
+
+#### 3. Train network
+
+```
+let weights = trainer.train(network, patterns[, learnRate])
+```
+```train``` method returns ```weights```. Save it to the file as json then you can use it next time simply passing to ```setWeights``` method of ```Network``` class.
+<br>```patterns``` is an array of patterns, contains input and desired values: 
 ```
 [
   {
@@ -19,20 +31,10 @@ let network = new Network(),
   }
 ]
 ```
-#### 2. Build network.
-```
-network.buildNetwork(2, 3, 1)
-```
-
-```buildNetwork``` accepts amounts of input, hidden and output neurons.
-
-#### 3. Train network
-```
-let weights = trainer.train(network)
-```
-```train``` method returns ```weights```. You can save it to the file as json. You can use it next time simply passing to ```setWeights``` method of ```Network``` class.
 
 #### 4. Use it
+
 ```
 network.calculate(input)
 ```
+```input``` object must be same as pattern

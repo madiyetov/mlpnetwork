@@ -28,34 +28,37 @@ module.exports =
         }
 
         createNeurons(inputs, hiddens, outputs) {
+            let me = this
 
-            this.inputNeurons  = Array.from(new Array(inputs), () => new InputNeuron())
-            this.hiddenNeurons = Array.from(new Array(hiddens), () => new HiddenNeuron())
-            this.outputNeurons = Array.from(new Array(outputs), () => new OutputNeuron())
-            this.biasNeuron = new BiasNeuron() 
+            me.inputNeurons  = Array.from(new Array(inputs), () => new InputNeuron())
+            me.hiddenNeurons = Array.from(new Array(hiddens), () => new HiddenNeuron())
+            me.outputNeurons = Array.from(new Array(outputs), () => new OutputNeuron())
+            
+            me.biasNeuron = new BiasNeuron() 
         }
 
         connectNeurons() {
+            let me = this
 
             // connecting hidden neurons
-            this.hiddenNeurons.forEach((hidden) => {
+            me.hiddenNeurons.forEach((hidden) => {
 
-                this.inputNeurons.forEach((input) => {                             // with the input neurons
-                    this.connections.push(new Connection(input, hidden))
+                me.inputNeurons.forEach((input) => {                             // with the input neurons
+                    me.connections.push(new Connection(input, hidden))
                 })
 
-                this.outputNeurons.forEach((output) => {                           // with the output neurons
-                    this.connections.push(new Connection(hidden, output))
+                me.outputNeurons.forEach((output) => {                           // with the output neurons
+                    me.connections.push(new Connection(hidden, output))
                 })
 
-                this.connections.push(new Connection(this.biasNeuron, hidden))     // with the bias neurons
+                me.connections.push(new Connection(me.biasNeuron, hidden))     // with the bias neurons
             
-            }, this)
+            }, me)
 
             // connecting bias neuron with the output neurons
-            this.outputNeurons.forEach((output) => {
-                this.connections.push(new Connection(this.biasNeuron, output))
-            }, this)
+            me.outputNeurons.forEach((output) => {
+                me.connections.push(new Connection(me.biasNeuron, output))
+            }, me)
         }
 
         /**
@@ -65,20 +68,21 @@ module.exports =
          * @returns {[number]} 
          */
         calculate(inputs) {
-            let length = this.inputNeurons.length
+            let me = this,
+                length = me.inputNeurons.length
 
             if (inputs.length !== length) 
                 throw new Error(`Pattern must have ${length} inputs for ${length} input neurons`)
 
             for (let i=0; i<length; i++) {
-                this.inputNeurons[i].activation = inputs[i]
+                me.inputNeurons[i].activation = inputs[i]
             }
 
-            this.hiddenNeurons.forEach(function(hidden) {
+            me.hiddenNeurons.forEach(function(hidden) {
                 hidden.activate()
-            }, this)
+            }, me)
             
-            return this.outputNeurons.map((output) => output.activate())
+            return me.outputNeurons.map((output) => output.activate())
         }
 
         /**

@@ -50,9 +50,12 @@ class Neuron extends NeuronBase {
      * @memberof Neuron
      */
     activate () {
-        this.propagate()
-        this.activation = 1/(1+Math.exp(-this.propagation))
-        return this.activation
+        let me = this
+
+        me.propagate()
+        me.activation = 1/(1+Math.exp(-me.propagation))
+        
+        return me.activation
     }  
 
     /**
@@ -74,13 +77,15 @@ class Neuron extends NeuronBase {
      * @memberof Neuron
      */
     propagate () {
-        this.propagation = 0
+        let me = this
 
-        for (let conn of this.inputs) { 
-            this.propagation += conn.weight*conn.input.activation 
+        me.propagation = 0
+
+        for (let conn of me.inputs) { 
+            me.propagation += conn.weight*conn.input.activation 
         }
 
-        return this.propagation
+        return me.propagation
     }
 }
 

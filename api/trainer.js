@@ -6,28 +6,25 @@ module.exports = {
     Trainer: class Trainer 
     {
         /**
-         * @param  {number} learnRate
-         * @param  {[{input: [number], desired: [number]}]} patterns
-         */
-        constructor (learnRate, patterns) {
-            this.learnRate = learnRate
-            this.patterns = patterns
-        }
-
-        /**
          * @param  {Network} network
+         * @param  {[{input: [number], desired: [number]}]} patterns
+         * @param  {number} learnRate
          * @returns {[number]}
          */
-        train (network) 
+        train (network, patterns, learnRate = 0.9) 
         {
-            this.bindErrorFunctions(network)
+            let me = this
+
+            if (!network || !patterns) throw Error('provide Network object and patterns')
+
+            me.bindErrorFunctions(network)
 
             // train untill error less than 0.1
             for (let i = 0, errorSum = 1; errorSum > 0.1; i++)
             {
                 errorSum = 0
 
-                for (var { input, desired } of this.patterns) {
+                for (let { input, desired } of patterns) {
                     
                     // Execute network for input pattern
                     let result = network.calculate(input)
@@ -49,9 +46,9 @@ module.exports = {
                     
                     // Calculate delta for every connection
                     network.connections.forEach(function(conn) {
-                        var outputNeuron = conn.output
-                        conn.weight += this.learnRate*outputNeuron.error*conn.input.activation
-                    }, this)
+                        let outputNeuron = conn.output
+                        conn.weight += learnRate*outputNeuron.error*conn.input.activation
+                    }, me)
 
                     for (let i=0; i<desired.length; i++) {
                         outputErrorSum += Math.abs(desired[i]-network.outputNeurons[i].activation) 
@@ -74,13 +71,14 @@ module.exports = {
 
         hiddenNeuronErrorCalculator () 
         {
-            let sum = 0
+            let me = this,
+                sum = 0
 
-            this.outputs.forEach(function(conn) {
+            me.outputs.forEach(function(conn) {
                 sum += conn.output.error*conn.weight
-            }, this)
+            }, me)
 
-            return this.deriveActivation()*sum
+            return me.deriveActivation()*sum
         }
 
         outputNeuronErrorCalculator (desired) 
