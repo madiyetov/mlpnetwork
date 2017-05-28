@@ -1,5 +1,5 @@
-let HiddenNeuron = require('./neuron').HiddenNeuron,
-    OutputNeuron = require('./neuron').OutputNeuron
+let HiddenNeuron = require('./neurons').HiddenNeuron,
+    OutputNeuron = require('./neurons').OutputNeuron
 
 module.exports = {
     

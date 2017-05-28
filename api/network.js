@@ -1,7 +1,7 @@
-let InputNeuron  = require('./neuron').InputNeuron,
-    HiddenNeuron = require('./neuron').HiddenNeuron,
-    OutputNeuron = require('./neuron').OutputNeuron,
-    BiasNeuron   = require('./neuron').BiasNeuron,
+let InputNeuron  = require('./neurons').InputNeuron,
+    HiddenNeuron = require('./neurons').HiddenNeuron,
+    OutputNeuron = require('./neurons').OutputNeuron,
+    BiasNeuron   = require('./neurons').BiasNeuron,
     Connection   = require('./connection').Connection
 
 module.exports = 
