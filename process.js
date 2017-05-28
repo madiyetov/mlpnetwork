@@ -3,10 +3,9 @@ let jsonfile   = require('jsonfile'),
 
 let patterns = jsonfile.readFileSync('./data/patterns.json')    
 let weights = jsonfile.readFileSync('./data/weights.json')
-let network = new Network()
+let network = new Network(2, 3, 1)
 
-// Create and initialize neural network
-network.buildNetwork(2, 3, 1)
+// Initialize neural networks weights
 network.setWeights(weights)
 
 for (let pattern of patterns) {

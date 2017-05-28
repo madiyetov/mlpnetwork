@@ -5,18 +5,12 @@
 #### 1. Create new Network and Trainer objects.
 
 ```
-let network = new Network(),
+let network = new Network(2, 3, 1),
     trainer = new Trainer()
 ```
+```Network``` constructor accepts amounts of input, hidden and output neurons.
 
-#### 2. Build network.
-
-```
-network.buildNetwork(2, 3, 1)
-```
-```buildNetwork``` accepts amounts of input, hidden and output neurons.
-
-#### 3. Train network
+#### 2. Train network
 
 ```
 let weights = trainer.train(network, patterns[, learnRate])
@@ -31,7 +25,7 @@ let weights = trainer.train(network, patterns[, learnRate])
 ]
 ```
 
-#### 4. Use
+#### 3. Use
 
 ```
 network.calculate(input)

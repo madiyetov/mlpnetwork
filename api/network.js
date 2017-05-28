@@ -7,13 +7,6 @@ let InputNeuron  = require('./neuron').InputNeuron,
 module.exports = 
 {
     Network: class Network {
-        constructor() {
-            this.inputNeurons = []
-            this.hiddenNeurons = []
-            this.outputNeurons = []
-            this.biasNeuron = null
-            this.connections = []
-        }
 
         /**
          * Builds network
@@ -22,9 +15,10 @@ module.exports =
          * @param {number} hiddens 
          * @param {number} outputs 
          */
-        buildNetwork(inputs, hiddens, outputs) {
+        constructor(inputs, hiddens, outputs) {
+
             this.createNeurons(inputs, hiddens, outputs)
-            this.connectNeurons()         
+            this.connectNeurons()  
         }
 
         createNeurons(inputs, hiddens, outputs) {
@@ -39,10 +33,11 @@ module.exports =
 
         connectNeurons() {
             let me = this
+            me.connections = []
 
             // connecting hidden neurons
-            me.hiddenNeurons.forEach((hidden) => {
-
+            me.hiddenNeurons.forEach((hidden) => 
+            {
                 me.inputNeurons.forEach((input) => {                             // with the input neurons
                     me.connections.push(new Connection(input, hidden))
                 })
@@ -53,12 +48,13 @@ module.exports =
 
                 me.connections.push(new Connection(me.biasNeuron, hidden))     // with the bias neurons
             
-            }, me)
+            })
 
             // connecting bias neuron with the output neurons
-            me.outputNeurons.forEach((output) => {
+            me.outputNeurons.forEach((output) => 
+            {
                 me.connections.push(new Connection(me.biasNeuron, output))
-            }, me)
+            })
         }
 
         /**
@@ -80,7 +76,7 @@ module.exports =
 
             me.hiddenNeurons.forEach(function(hidden) {
                 hidden.activate()
-            }, me)
+            })
             
             return me.outputNeurons.map((output) => output.activate())
         }
