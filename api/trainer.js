@@ -13,42 +13,27 @@ module.exports = {
          */
         train (network, patterns, learnRate = 0.9) 
         {
-            let me = this
+            let me = this,
+                length = network.outputNeurons.length
 
             if (!network || !patterns) throw Error('provide Network object and patterns')
-
-            me.bindErrorFunctions(network)
 
             // train untill error less than 0.1
             for (let i = 0, errorSum = 1; errorSum > 0.1; i++)
             {
                 errorSum = 0
 
-                for (let { input, desired } of patterns) {
-                    
-                    // Execute network for input pattern
-                    let result = network.calculate(input)
-                    let length = network.outputNeurons.length
-                    let outputErrorSum = 0
-                    
-                    // Calculate error function for every neuron
+                for (let { input, desired } of patterns) 
+                {
                     if (desired.length !== length) 
                         throw new Error(`Desired must have ${length} elements`)
 
-                    for (let i=0; i<length; i++) {
-                        let neuron = network.outputNeurons[i]
-                        neuron.error = neuron.calculateError(desired[i])
-                    }
-
-                    network.hiddenNeurons.forEach(function(neuron) {
-                        neuron.error = neuron.calculateError()
-                    }, network)
+                    // Process network for input pattern
+                    let result = network.calculate(input)
+                    let outputErrorSum = 0
                     
-                    // Calculate delta for every connection
-                    network.connections.forEach(function(conn) {
-                        let outputNeuron = conn.output
-                        conn.weight += learnRate*outputNeuron.error*conn.input.activation
-                    }, me)
+                    me.calculateError(network, desired)
+                    me.calculateDelta (network, learnRate)
 
                     for (let i=0; i<desired.length; i++) {
                         outputErrorSum += Math.abs(desired[i]-network.outputNeurons[i].activation) 
@@ -63,10 +48,38 @@ module.exports = {
             return network.connections.map((conn) => conn.weight)
         }
 
-        bindErrorFunctions (network) 
+        /**
+         * Calculate delta for every connection
+         * 
+         * @param {Network} network 
+         * @param {number} learnRate 
+         */
+        calculateDelta (network, learnRate) 
         {
-            OutputNeuron.prototype.calculateError = this.outputNeuronErrorCalculator        
-            HiddenNeuron.prototype.calculateError = this.hiddenNeuronErrorCalculator
+            network.connections.forEach(function(conn) {
+                let outputNeuron = conn.output
+                conn.weight += learnRate*outputNeuron.error*conn.input.activation
+            })
+        }
+
+        /**
+         * Calculate error function for every neuron
+         * 
+         * @param {Network} network 
+         * @param {[number]} desired 
+         */
+        calculateError (network, desired) 
+        {
+            let me = this
+
+            for (let i=0; i<desired.length; i++) {
+                let neuron = network.outputNeurons[i]
+                neuron.error = me.outputNeuronErrorCalculator.call(neuron, desired[i])
+            }
+
+            network.hiddenNeurons.forEach(function(neuron) {
+                neuron.error = me.hiddenNeuronErrorCalculator.call(neuron)
+            })
         }
 
         hiddenNeuronErrorCalculator () 
