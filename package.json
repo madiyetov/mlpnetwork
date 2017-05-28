@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "train": "node train.js",
-    "process": "node index.js"
+    "process": "node process.js"
   },
   "repository": {
     "type": "git",

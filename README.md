@@ -37,3 +37,7 @@ let weights = trainer.train(network, patterns[, learnRate])
 network.calculate(input)
 ```
 ```input``` object must be the same as input property of the pattern used in training
+
+#### P.S.
+
+See ```train.js``` as an example of training. Run ```node train.js``` and it will save calculated weights to the file. Then run ```node process.js``` and it will execute neural network using calculated weights.
