@@ -1,4 +1,4 @@
-# Simple MLP neural network. Written in ES6.
+# Multilayer Perceptron. Simple neural network. Written in ES6 (Javascript).
 
 ## Usage
 
